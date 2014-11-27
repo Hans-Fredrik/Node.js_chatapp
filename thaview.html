@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <title>Klikkeservlet</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+
+
+
+        var socket = io.connect("http://localhost:1234");
+        $(function () {
+
+            //When send button is clicked on, send the message to server
+            $("#send").click(function () {
+                //send click to the server lal
+                socket.emit("clickEvent", {});
+            });
+
+            socket.on("clickEvent", function (counter) {
+                // Set the counter from server
+                 $("#test").html(counter);
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+
+<h1>Klikkeservlet 1.0, velkommen </h1>
+
+<!--Send: A button to send the message to others-->
+<input type="submit" id="send" value="Click click" />
+<br/>
+
+
+<div id="test"></div>
+</body>
+
+</html>
