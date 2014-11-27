@@ -33,10 +33,8 @@
 
 
             // Listening to server
-            socket.on("clickEvent", function (counter) {
-                // Set the counter from server
-                 $("#test").html(counter);
-                document.body.style.background = counter;
+            socket.on("clickEvent", function (color) {
+                document.body.style.background = color;
             });
 
         });
