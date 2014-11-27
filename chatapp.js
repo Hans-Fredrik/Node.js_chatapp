@@ -4,6 +4,8 @@ var app = require("http").createServer(handler),
 
 app.listen(1234);
 
+var counter = 0;
+
 function handler(req, res) {
     fs.readFile(__dirname + '/index.html',
         function (err, data) {
@@ -30,4 +32,23 @@ io.sockets.on('connection', function (socket) {
         socket.emit("sender", data);
         socket.broadcast.emit("sender", data);
     });
+
+
+    // when the user disconnects.. perform this
+    socket.on("disconnect", function (data) {
+        console.log("disconnect function is running...", data);
+        socket.broadcast.emit("User left..");
+    })
+
+
+    socket.on('test', function(data){
+        counter++;
+        console.log(counter);
+        // same client
+        socket.emit('test', data);
+        // all clients
+        socket.broadcast.emit('test', data);
+    });
 });
+
+

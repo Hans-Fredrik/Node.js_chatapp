@@ -9,7 +9,7 @@
         var socket = io.connect("http://localhost:1234");
         $(function () {
             //as the user to enter their nick name or name.
-            name = window.prompt("enter your name");
+            name = window.prompt("enter your names");
             //If the name is not given, ask the user to enter once again
             if (name == null) {
                 $("body").html(" please refresh the page and try again ");
@@ -21,6 +21,12 @@
                     "name": name,
                     "msg": $("#msg").val()
                 });
+
+                socket.emit("test", {
+                    "name": name,
+                    "msg": $("#msg").val()
+                });
+
             });
 
             //After sending message to the server, we'll have to wire up the event for it.
@@ -43,6 +49,12 @@
                     $("#status").html('');
                 }, 3000);
             });
+
+            socket.on("test", function (data) {
+                //Append the message from the server to the message box
+                $("#test").append("<strong>" + data.name + "</strong>: " + data.msg + "<br/>");
+            });
+
         });
     </script>
 </head>
@@ -58,6 +70,8 @@
 <input type="submit" id="send" value="send" />
 <br/>
 <div id="status"></div>
+
+<div id="test"></div>
 </body>
 
 </html>
