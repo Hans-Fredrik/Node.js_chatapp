@@ -1,6 +1,3 @@
-/**
- * Created by Hans Fredrik on 26.11.2014.
- */
 var app = require("http").createServer(handler),
     io = require("socket.io").listen(app),
     fs = require("fs");
