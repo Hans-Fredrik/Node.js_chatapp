@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>Klikkeservlet</title>
+    <title>Colors</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script>
@@ -12,14 +12,31 @@
         $(function () {
 
             //When send button is clicked on, send the message to server
-            $("#send").click(function () {
-                //send click to the server lal
-                socket.emit("clickEvent", {});
+            $("#sendBlue").click(function () {
+                socket.emit("clickEvent", {"color": "#1E3BFA"});
             });
 
+
+            $("#sendRed").click(function () {
+                socket.emit("clickEvent", {"color": "#E80707"});
+            });
+
+
+            $("#sendGreen").click(function () {
+                socket.emit("clickEvent", {"color": "#03FFC4"});
+            });
+
+
+            $("#sendYellow").click(function () {
+                socket.emit("clickEvent", {"color": "#FFFF05"});
+            });
+
+
+            // Listening to server
             socket.on("clickEvent", function (counter) {
                 // Set the counter from server
                  $("#test").html(counter);
+                document.body.style.background = counter;
             });
 
         });
@@ -31,7 +48,10 @@
 <h1>Klikkeservlet 1.0, velkommen </h1>
 
 <!--Send: A button to send the message to others-->
-<input type="submit" id="send" value="Click click" />
+<input type="submit" id="sendBlue" value="Click blue" />
+<input type="submit" id="sendRed" value="Click Red" />
+<input type="submit" id="sendGreen" value="Click Green" />
+<input type="submit" id="sendYellow" value="Click yellow" />
 <br/>
 
 

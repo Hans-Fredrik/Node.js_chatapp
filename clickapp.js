@@ -26,13 +26,10 @@ io.sockets.on('connection', function (socket) {
     //when recieving the data from the server, push the same message to client
 
     socket.on('clickEvent', function(data){
-        counter++;
-        console.log(counter);
         // same client
-        socket.emit('clickEvent', counter);
+        socket.emit('clickEvent', data.color);
         // all clients
-        socket.broadcast.emit('clickEvent', counter);
+        socket.broadcast.emit('clickEvent', data.color);
     });
-
 
 });
