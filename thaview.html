@@ -1,59 +1,129 @@
-<html>
-
+<!doctype html>
+<html class="no-js" lang="en">
 <head>
+    <link rel="stylesheet" href="http://cdn.foundation5.zurb.com/foundation.css"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Colors</title>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script>
+    <style>
+        h1 {
+            text-align: center;
+        }
 
+        .button {
+            color: #000000;
+        }
 
+        #blueBtn {
+            background-color: #779ECB;
+        }
 
-        var socket = io.connect("http://localhost:1234");
-        $(function () {
+        #redBtn {
+            background-color: #FF6961;
+        }
 
-            //When send button is clicked on, send the message to server
-            $("#sendBlue").click(function () {
-                socket.emit("clickEvent", {"color": "#1E3BFA"});
-            });
+        #greenBtn {
+            background-color: #77DD77;
+        }
 
+        #yellowBtn {
+            background-color: #FDFD96;
+        }
 
-            $("#sendRed").click(function () {
-                socket.emit("clickEvent", {"color": "#E80707"});
-            });
+        #currentTxt {
+            display: inline;
+            width: 400px;
+        }
 
+        #currentColor, #currentNodes {
+            height: 10px;
 
-            $("#sendGreen").click(function () {
-                socket.emit("clickEvent", {"color": "#03FFC4"});
-            });
+            display: inline;
+            left: 220px;
+            top: 0;
+            position: absolute;
+        }
 
+        #boxDiv {
+            float: left;
+        }
 
-            $("#sendYellow").click(function () {
-                socket.emit("clickEvent", {"color": "#FFFF05"});
-            });
-
-
-            // Listening to server
-            socket.on("clickEvent", function (color) {
-                document.body.style.background = color;
-            });
-
-        });
-    </script>
+        body {
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
 </head>
 
 <body>
+<h1>ColorClick </h1>
 
-<h1>Klikkeservlet 1.0, velkommen </h1>
-
-<!--Send: A button to send the message to others-->
-<input type="submit" id="sendBlue" value="Click blue" />
-<input type="submit" id="sendRed" value="Click Red" />
-<input type="submit" id="sendGreen" value="Click Green" />
-<input type="submit" id="sendYellow" value="Click yellow" />
-<br/>
-
-
+<div class="row small-3">
+    <div class="small-12 large-6 columns">
+        <input id="blueBtn" type="button" class="expand button" value="Blue"/>
+    </div>
+    <div class="small-12 large-6 columns">
+        <input id="redBtn" type="button" class="expand button" value="Red"/>
+    </div>
+    <div class="small-12 large-6 columns">
+        <input id="greenBtn" type="button" class="expand button" value="Green"/>
+    </div>
+    <div class="small-12 large-6 columns">
+        <input id="yellowBtn" type="button" class="expand button" value="Yellow"/>
+    </div>
+    <div class="small-12 columns" id="boxDiv">
+        <p id="currentTxt">Gjeldende farge er: </p><span id="currentColor"><i>(velg en farge)</i></span>
+    </div>
+    <div class="small-12 columns" id="boxDiv">
+        <p id="nodesTxt">Antall som ser dette: </p><span id="currentNodes"><i>(antall noder)</i></span>
+    </div>
+</div>
 <div id="test"></div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.foundation5.zurb.com/foundation.js"></script>
+<script>
+    $(document).foundation();
+</script>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script>
+    var socket = io();
+    $(function () {
+        //When send button is clicked on, send the message to server
+        $("#blueBtn").click(function () {
+            socket.emit("clickEvent", {"color": "blue"});
+        });
+
+        $("#redBtn").click(function () {
+            socket.emit("clickEvent", {"color": "red"});
+        });
+
+        $("#greenBtn").click(function () {
+            socket.emit("clickEvent", {"color": "green"});
+        });
+
+        $("#yellowBtn").click(function () {
+            socket.emit("clickEvent", {"color": "yellow"});
+        });
+
+        // Listening to server
+        socket.on("clickEvent", function (color) {
+            var pastelColor;
+            switch (color) {
+                case 'red': pastelColor = '#FF6961'; break;
+                case 'green': pastelColor = '#77DD77'; break;
+                case 'blue': pastelColor = '#779ECB'; break;
+                case 'yellow': pastelColor = '#fdfd96'; break;
+            }
+            $('body').css('backgroundColor', pastelColor);
+            $('#currentColor').fadeOut('fast', function () {
+                $('#currentColor').html(color).fadeIn('fast');
+            });
+        });
+    });
+</script>
 </body>
 
 </html>
