@@ -4,9 +4,9 @@
     <link rel="stylesheet" href="http://cdn.foundation5.zurb.com/foundation.css"/>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ColorClick</title>
+    <title>FargeKlikker</title>
     <style>
-        h1 {
+        #topTxt {
             text-align: center;
         }
 
@@ -43,8 +43,7 @@
         }
 
         #boxDiv *{
-            /*float: left;*/
-            /*font-size: medium;*/
+            float: left;
         }
 
         body {
@@ -57,26 +56,30 @@
 </head>
 
 <body>
-<h1>ColorClick </h1>
+
+<div id="topTxt" class="row small-12 large-4 medium-6 ">
+    <h1>FargeKlikker </h1>
+    <p><i>Demonstrerer sanntidskommunikasjon.</i></p>
+</div>
 
 <div class="row small-12 large-4 medium-6">
     <div class="small-12 large-6 columns">
-        <input id="blueBtn" type="button" class="expand button" value="Blue"/>
+        <input id="blueBtn" type="button" class="expand button" value="Blå"/>
     </div>
     <div class="small-12 large-6 columns">
-        <input id="redBtn" type="button" class="expand button" value="Red"/>
+        <input id="redBtn" type="button" class="expand button" value="Rød"/>
     </div>
     <div class="small-12 large-6 columns">
-        <input id="greenBtn" type="button" class="expand button" value="Green"/>
+        <input id="greenBtn" type="button" class="expand button" value="Grønn"/>
     </div>
     <div class="small-12 large-6 columns">
-        <input id="yellowBtn" type="button" class="expand button" value="Yellow"/>
+        <input id="yellowBtn" type="button" class="expand button" value="Gul"/>
     </div>
     <div class="small-12 columns" id="boxDiv">
-        <p id="currentTxt">Current color is: </p><span id="currentColor"><i>(choose a color)</i></span>
+        <p id="currentTxt">Gjeldende farge: </p><span id="currentColor"><i>(velg en farge)</i></span>
     </div>
     <div class="small-12 columns" id="boxDiv">
-        <p id="nodesTxt">Current nodes: </p><span id="currentNodes"><i>(number of nodes)</i></span>
+        <p id="nodesTxt">Antall noder: </p><span id="currentNodes"><i>(antall noder)</i></span>
     </div>
 </div>
 <div id="test"></div>
@@ -92,29 +95,29 @@
     $(function () {
         //When send button is clicked on, send the message to server
         $("#blueBtn").click(function () {
-            socket.emit("clickEvent", {"color": "blue"});
+            socket.emit("clickEvent", {"color": "blå"});
         });
 
         $("#redBtn").click(function () {
-            socket.emit("clickEvent", {"color": "red"});
+            socket.emit("clickEvent", {"color": "rød"});
         });
 
         $("#greenBtn").click(function () {
-            socket.emit("clickEvent", {"color": "green"});
+            socket.emit("clickEvent", {"color": "grønn"});
         });
 
         $("#yellowBtn").click(function () {
-            socket.emit("clickEvent", {"color": "yellow"});
+            socket.emit("clickEvent", {"color": "gul"});
         });
 
         // Listening to server
         socket.on("clickEvent", function (color) {
             var pastelColor;
             switch (color) {
-                case 'red': pastelColor = '#FF6961'; break;
-                case 'green': pastelColor = '#77DD77'; break;
-                case 'blue': pastelColor = '#779ECB'; break;
-                case 'yellow': pastelColor = '#fdfd96'; break;
+                case 'rød': pastelColor = '#FF6961'; break;
+                case 'grønn': pastelColor = '#77DD77'; break;
+                case 'blå': pastelColor = '#779ECB'; break;
+                case 'gul': pastelColor = '#fdfd96'; break;
             }
             $('body').css('backgroundColor', pastelColor);
             $('#currentColor').fadeOut('fast', function () {
